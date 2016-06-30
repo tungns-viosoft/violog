@@ -1,0 +1,11 @@
+
+/********* PERFORMANCE **********/
+
+div.srt-choose {
+	float:left;
+	display:inline-block;
+}
+
+#srt-selector {
+    overflow-y:scroll;
+}

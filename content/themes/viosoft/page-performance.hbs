@@ -6,6 +6,9 @@
 {{!-- Everything inside the #post tags pulls data from the page --}}
 {{#post}}
 
+
+
+
 <header class="main-header post-head {{#if image}}" style="background-image: url({{image}}){{else}}no-cover{{/if}}">
     <nav class="main-nav {{#if image}}overlay{{/if}} clearfix">
         {{#if @blog.logo}}<a class="blog-logo" href="{{@blog.url}}"><img src="{{@blog.logo}}" alt="{{@blog.title}}" /></a>{{/if}}
@@ -15,10 +18,57 @@
     </nav>
 </header>
 
-<main class="content" role="main">
+<main class="content" role="main" >
+
+    <div class="container" ng-app="vioApp" ng-controller="vioCtrl" >
+        <div class="row"> 
+            <div class="col-md-5 srt-choose">
+                <div class="srt-label">
+                    <span class="label-content">SRT</span>
+                </div>
+
+                <h1>Data: {{ mydata }}</h1>
+                <span ng-bind="mydata"></span>
+
+                <div class="srt-list">
+                    <select id="srt-selector" name="srt-list">
+                      <option value="volvo">Volvo</option>
+                      <option value="saab">Saab</option>
+                      <option value="mercedes">Mercedes</option>
+                      <option value="audi">Audi</option>
+                    </select>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        var appp = angular.module('vioApp', []);
+        appp.controller('vioCtrl', function($scope, $http) {
+            $scope.mydata = "hehe";
+            $http.get(
+                "http://localhost/student.json"
+            // { 
+            //     method: "GET",
+            //     // dataType: "jsonp",
+            //     //url:"http://www.w3schools.com/angular/welcome.htm"
+            //     url:"http://localhost/student.json"
+            // }
+            ).then(function(response) {
+                console.log(response.data.students[0].name);
+                $scope.mydata = response.data.students[0].name;
+            });
+        });
+
+    </script>
+
+<!-- 
     <article class="{{post_class}}">
 
-        <h1>Hello this is performance page</h1>
 
         <header class="post-header">
             <h1 class="post-title">{{title}}</h1>
@@ -29,5 +79,13 @@
         </section>
 
     </article>
+
+-->
+
 </main>
+
+
+
+
+
 {{/post}}
