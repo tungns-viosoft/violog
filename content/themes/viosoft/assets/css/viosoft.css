@@ -6,6 +6,6 @@ div.srt-choose {
 	display:inline-block;
 }
 
-#srt-selector {
-    overflow-y:scroll;
+#srt-selector{
+   	/*overflow-y:scroll;*/
 }
