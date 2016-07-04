@@ -1,11 +1,47 @@
 
 /********* PERFORMANCE **********/
 
-div.srt-choose {
+div.srt-block {
+
+}
+
+div.nvf-block{
+
+}
+
+div.testcase-block{
+
+}
+
+
+div.block {
 	float:left;
-	display:inline-block;
+	display: inline;
+	margin: 5px;
+}
+
+div.block-label {
+	font-size: 20;
+	font-weight: bold;
 }
 
 #srt-selector{
    	/*overflow-y:scroll;*/
+}
+
+
+/******** table ********/
+
+table#testcase-table th#header-testcase {
+	width: 70%;
+	border: 1px solid gray;
+}
+
+
+table#testcase-table th#header-action {
+	border: 1px solid gray;
+}
+
+table#testcase-table tr td {
+	border: 1px solid gray;
 }

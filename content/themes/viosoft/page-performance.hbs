@@ -3,8 +3,8 @@
 {{!-- This is a page template. A page outputs content just like any other post, and has all the same
     attributes by default, but you can also customise it to behave differently if you prefer. --}}
 
-{{!-- Everything inside the #post tags pulls data from the page --}}
-{{#post}}
+    {{!-- Everything inside the #post tags pulls data from the page --}}
+    {{#post}}
 
 
 <script type="text/javascript" src="{{asset "js/Chart.js"}}"></script> 
@@ -16,99 +16,189 @@
     <nav class="main-nav {{#if image}}overlay{{/if}} clearfix">
         {{#if @blog.logo}}<a class="blog-logo" href="{{@blog.url}}"><img src="{{@blog.logo}}" alt="{{@blog.title}}" /></a>{{/if}}
         {{#if @blog.navigation}}
-            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+        <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
         {{/if}}
     </nav>
 </header>
 
 <main class="content" role="main" >
 
-    <div class="container" ng-app="myapp" ng-controller="myctrl"  >
+    <div class="container">
+
+        <script type="text/javascript">
+            var database;
+            var srts = [];
+            var vnfs= [];
+            var testcases = [];
+
+            $.get(
+                "http://localhost:1337/api/performance", function(data, status) {
+                database = data;
+                console.log(database);
+
+                $.each(database, function(i, val){
+                    if(!srts.includes(val.usecase)){
+                        srts.push(val.usecase);
+                    }
+                });
+                refreshSrt();
+            });
+
+            function refreshSrt(){
+                refreshSelector("#srt-selector", srts);
+            }
+
+            function refreshVnf(){ 
+                refreshSelector("#vnf-selector", vnfs);
+            }
+
+            function refreshTestcase(){ 
+                refreshSelector("#testcase-selector", testcases);
+            }
+
+
+            function refreshSelector(id, arr ){
+                var sl = $(id);
+                sl.empty();
+                $.each(arr, function(i,val){
+                    var opt = "<option  value=" + i + " >" + val + "</option>";
+                    console.log(opt);
+                    sl.append(opt);
+                });
+            }
+
+        </script>
+
 
         <div class="row"> 
-            <div class="col-md-5 srt-choose">
-                <div class="srt-label">
-                    <span class="label-content">SRT</span>
+            <div class="col-md-4">
+                <div class="srt-block block">
+                    <div class="block-label">
+                        <span id="srt-label">SRT</span>
+                    </div>
+
+                    <div class="srt-list">
+                        <select id="srt-selector" size="10">
+                            <!-- <option ng-repeat="option in database" value="{[{ option.usecase }]}">{[{ option.usecase }]}</option> -->
+                        </select>
+                    </div>
+
                 </div>
+            </div>
 
-                
+            <div class="col-md-4">
+                <div class="vnf-block block">
+                    <div class="block-label">
+                        <span id="vnf-label">VNF</span>                    
+                    </div>
 
-                <div class="srt-list">
-                    <select id="srt-selector" name="srt-selector" multiple >
-                      <option value="volvo">Volvo</option>
-                      <option value="saab">Saab</option>
-                      <option value="mercedes">Mercedes</option>
-                      <option value="audi">Audi</option>
-                      <option value="toyota">Toyota</option>
-                      <option value="porsche">Porsche</option>
-                    </select>
+                    <div class="vnf-list">
+                        <select id="vnf-selector" name="vnf-selector" size="10">
+                          <option value="volvo">Volvo</option>
+                          <option value="saab">Saab</option>
+                          <option value="mercedes">Mercedes</option>
+                          <option value="audi">Audi</option>
+                          <option value="toyota">Toyota</option>
+                          <option value="porsche">Porsche</option>
+                        </select>
+                    </div>
+
                 </div>
-
 
             </div>
 
-        </div>
 
+
+            <div class="col-md-4">
+                <div class="testcase-block block">
+                    <div class="block-label">
+                        <span id="testcase-label">Test case</span>                    
+                    </div>
+
+                    <div class="testcase-list">
+                        <select id="testcase-selector" name="testcase-selector" size="10">
+                          <option value="volvo">Volvo</option>
+                          <option value="saab">Saab</option>
+                          <option value="mercedes">Mercedes</option>
+                          <option value="audi">Audi</option>
+                          <option value="toyota">Toyota</option>
+                          <option value="porsche">Porsche</option>
+                        </select>
+                    </div>
+
+                </div>  
+            </div>
+
+        </div>
 
         <div class="row">
-            
-            <div class="col-md-8 srt-char">
-                <canvas id="canvas"></canvas>
+
+            <div class="col-md-8">
+                <div class="chart">                    
+                    <canvas id="canvas"></canvas>
+                </div>
             </div>
+
+            <div class="col-md-4">
+                <div class="testcase-table">
+                    <table id="testcase-table">
+                        <tr>
+                            <th id="header-testcase">Test case</th>
+                            <th id="header-action">Action</th>
+                        </tr>
+                        <tr>
+                            <td>xxx</td>
+                            <td>yyy</td>
+                        </tr>
+
+
+                    </table>
+                </div>
+            </div>  
+
 
         </div>
 
-    </div>
 
-    <script>
+        <script type="text/javascript">
+            $("#srt-selector").change(function(){
 
+                var str; 
+                $( "select option:selected" ).each(function() {
+                  str = $( this ).text();
+                  return true;
+                });
 
+                $.each(database, function(i,val){
+                    // if(val.usecase === str && !vnfs.includes(val.vnfname)){                        
+                    //     vnfs.push(val.vnfname);
+                    // }
 
-        // $("#srt-selector option").click(function(){
-        //     var count = 0;
-        //     $( "#srt-selector option:selected" ).each(function() {
-        //       count ++;
-        //     });
-        //     if(count == 3){
-        //         // alert("max is 2");
-        //         $(this).removeAttr("selected");
-        //     } else if(count > 3) {
-        //         $( "#srt-selector option:selected" ).each(function() {
-        //           $(this).removeAttr("selected");
-        //         });
-        //     }
+                    if(val.usecase === str ){                     
+                        if( !vnfs.includes(val.vnfname))  {
+                            console.log("Tim thay " + val.vnfname);
+                            vnfs.push(val.vnfname);
+                        } else{ 
+                            console.log("Tim thay nhung bo qua ");
+                        }
+                    }
+                });
 
-        // });
-
-        // $("#srt-selector").change(function(){
-        //     var str = "";
-        //     $( "select option:selected" ).each(function() {
-        //       str += $( this ).val() + " ";
-        //     });
-        //     console.log(str);
-        // });
-
-        var appp = angular.module('myapp', []);
-
-        appp.config(function($interpolateProvider) {
-          $interpolateProvider.startSymbol('{[{');
-          $interpolateProvider.endSymbol('}]}');
-        });
-
-        appp.controller('myctrl', function($scope, $http) {
-
-            $http.get(
-                "http://localhost:1337/api/performance"
-            ).then(function(response) {
-
-                // console.log(response);
-
-                loadChart(response.data[0], "canvas");
+                console.log(vnfs);
 
             });
-        });
 
-    </script>
+
+
+
+
+        </script>
+
+
+
+
+
+    </div>
 
 <!-- 
     <article class="{{post_class}}">
