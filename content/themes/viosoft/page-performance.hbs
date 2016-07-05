@@ -27,7 +27,7 @@
 
         <script type="text/javascript">
             var database;
-            var srts = [];
+            var usecases = [];
             var vnfs= [];
             var testcases = [];
 
@@ -37,15 +37,15 @@
                 console.log(database);
 
                 $.each(database, function(i, val){
-                    if(!srts.includes(val.usecase)){
-                        srts.push(val.usecase);
+                    if(!usecases.includes(val.usecase)){
+                        usecases.push(val.usecase);
                     }
                 });
-                refreshSrt();
+                refreshUsecase();
             });
 
-            function refreshSrt(){
-                refreshSelector("#srt-selector", srts);
+            function refreshUsecase(){
+                refreshSelector("#usecase-selector", usecases);
             }
 
             function refreshVnf(){ 
@@ -61,8 +61,7 @@
                 var sl = $(id);
                 sl.empty();
                 $.each(arr, function(i,val){
-                    var opt = "<option  value=" + i + " >" + val + "</option>";
-                    console.log(opt);
+                    var opt = '<option  value=' + i + ' >' +  val + '</option>';
                     sl.append(opt);
                 });
             }
@@ -72,14 +71,14 @@
 
         <div class="row"> 
             <div class="col-md-4">
-                <div class="srt-block block">
+                <div class="usecase-block block">
                     <div class="block-label">
-                        <span id="srt-label">SRT</span>
+                        <span id="usecase-label">Use case</span>
                     </div>
 
-                    <div class="srt-list">
-                        <select id="srt-selector" size="10">
-                            <!-- <option ng-repeat="option in database" value="{[{ option.usecase }]}">{[{ option.usecase }]}</option> -->
+                    <div class="usecase-list">
+                        <select id="usecase-selector" size="10">
+                        <!-- Option data here -->
                         </select>
                     </div>
 
@@ -94,12 +93,6 @@
 
                     <div class="vnf-list">
                         <select id="vnf-selector" name="vnf-selector" size="10">
-                          <option value="volvo">Volvo</option>
-                          <option value="saab">Saab</option>
-                          <option value="mercedes">Mercedes</option>
-                          <option value="audi">Audi</option>
-                          <option value="toyota">Toyota</option>
-                          <option value="porsche">Porsche</option>
                         </select>
                     </div>
 
@@ -117,12 +110,7 @@
 
                     <div class="testcase-list">
                         <select id="testcase-selector" name="testcase-selector" size="10">
-                          <option value="volvo">Volvo</option>
-                          <option value="saab">Saab</option>
-                          <option value="mercedes">Mercedes</option>
-                          <option value="audi">Audi</option>
-                          <option value="toyota">Toyota</option>
-                          <option value="porsche">Porsche</option>
+                        <!-- test case data here -->
                         </select>
                     </div>
 
@@ -161,33 +149,89 @@
 
 
         <script type="text/javascript">
-            $("#srt-selector").change(function(){
 
-                var str; 
-                $( "select option:selected" ).each(function() {
-                  str = $( this ).text();
+            var currentUsecase;
+            var currentVnf;
+            var currentTestcase;
+
+
+            $("#usecase-selector").change(function(){
+                currentUsecase = "";
+                $( "select#usecase-selector option:selected" ).each(function() {
+                  currentUsecase = $( this ).text();
                   return true;
                 });
 
-                $.each(database, function(i,val){
-                    // if(val.usecase === str && !vnfs.includes(val.vnfname)){                        
-                    //     vnfs.push(val.vnfname);
-                    // }
+                //clear vnfs array
+                while(vnfs.length > 0) {
+                    vnfs.pop();
+                }
 
-                    if(val.usecase === str ){                     
-                        if( !vnfs.includes(val.vnfname))  {
-                            console.log("Tim thay " + val.vnfname);
-                            vnfs.push(val.vnfname);
-                        } else{ 
-                            console.log("Tim thay nhung bo qua ");
-                        }
+                //clear testcase array
+                while(testcases.length > 0) {
+                    testcases.pop();
+                }
+
+
+                $.each(database, function(i,val){
+                    if(val.usecase === currentUsecase && !vnfs.includes(val.vnfname) ){           
+                        vnfs.push(val.vnfname);
                     }
                 });
-
-                console.log(vnfs);
+                refreshVnf();
+                refreshTestcase();
 
             });
 
+            $("#vnf-selector").change(function(){
+                currentVnf = "";
+                $( "select#vnf-selector option:selected" ).each(function() {
+                  currentVnf = $( this ).text();
+                  return true;
+                });
+
+                //clear vnfs array
+                while(testcases.length > 0) {
+                    testcases.pop();
+                }
+
+                $.each(database, function(i,val){
+                    if(val.usecase === currentUsecase && val.vnfname === currentVnf && !testcases.includes(val.testcase) ){           
+                        testcases.push(val.testcase);
+                    }
+                });
+                refreshTestcase();
+
+            });
+
+
+            $("#testcase-selector").change(function(){
+                currentTestcase = "";
+                $( "select#testcase-selector option:selected" ).each(function() {
+                  currentTestcase = $( this ).text();
+                  return true;
+                });
+
+                // $('table#testcase-table > tbody > tr > td > button[value="remove"]').closest("tr").remove();
+
+                var row = '<tr><td>' + currentTestcase +'</td><td><button class="action-button" value="remove">Remove</button></td></tr>';
+
+
+                $(row).hide().appendTo("table#testcase-table > tbody:last").fadeIn(300);
+                // same way
+                // var x = $(row).hide().fadeIn(10000);
+                // $("table#testcase-table > tbody:last").append(x);
+
+
+
+
+
+
+            });
+
+            $('table#testcase-table').on('click', 'button.action-button',function(){
+                $(this).closest('tr').remove();
+            });
 
 
 

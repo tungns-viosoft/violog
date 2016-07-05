@@ -45,3 +45,10 @@ table#testcase-table th#header-action {
 table#testcase-table tr td {
 	border: 1px solid gray;
 }
+
+table#testcase-table tr td button.action-button {
+	min-height: 10px;
+}
+
+
+
