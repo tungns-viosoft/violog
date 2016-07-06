@@ -2,7 +2,7 @@
 var config = {
     type: 'line',
     data: {
-        labels: input.size,
+        labels: [],
         datasets: []
     },
     options: {
@@ -45,25 +45,31 @@ var randomColor = function(opacity) {
 };
 
 
-function loadChart(input, canvasId){
-
-    addChart(input);
-
-    window.onload = function() {
-        var ctx = document.getElementById(canvasId).getContext("2d");
-        window.myLine = new Chart(ctx, config);
-    };
+window.onload = function() {
 
 };
 
+
+var myLine;
+function loadChart(input,canvasId){
+    config.labels = input.size.slice();
+
+    addChart(input);
+
+    var ctx = document.getElementById(canvasId).getContext("2d");   
+    myLine = new Chart(ctx, config);
+};
+
 function reloadChart(){
-    window.myLine.update();
+    myLine.update();
 }
 
 
 
 function addChart(input){
-    var ln = input.lines[0].zero_loss;
+
+
+    var ln = input.lines[0].zero_loss.slice();
 
     for(var i = 1; i < input.lines.length; i++){
         $.each(input.lines[i].zero_loss, function(j, vl){
@@ -71,26 +77,39 @@ function addChart(input){
         });
     }
 
-    $.each(input.lines, function(i, l){
-        ln[i] = ln[i] / input.lines.length;
+    $.each(ln, function(i, l){
+        ln[i] = Math.round(ln[i] / input.lines.length);
     });
-
-    console.log(ln);
 
     var background = randomColor(0.5);
 
     var newset = {
         label: input.session,
-        data: ln;
-        fill: false
+        data: ln,
+        fill: false,
 
         borderColor: background,
         backgroundColor: background,
         pointBorderColor: background,
         pointBackgroundColor: background,
         pointBorderWidth: 1,
+        id: input.id,
     }
 
     config.data.datasets.push(newset);
+
 }
 
+
+function removeChart(id){
+
+    var index;
+    $.each(config.data.datasets, function(i, val){
+        if(val.id === id){
+            index = i;
+            return false;
+        } 
+    });
+
+    config.data.datasets.splice(index,1);
+}

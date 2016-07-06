@@ -29,7 +29,7 @@
             var database;
             var usecases = [];
             var vnfs= [];
-            var testcases = [];
+            var testcases = {};
 
             $.get(
                 "http://localhost:1337/api/performance", function(data, status) {
@@ -144,7 +144,6 @@
                 </div>
             </div>  
 
-
         </div>
 
 
@@ -152,7 +151,9 @@
 
             var currentUsecase;
             var currentVnf;
-            var currentTestcase;
+            // var currentTestcase;
+
+            var charttable = {};
 
 
             $("#usecase-selector").change(function(){
@@ -167,10 +168,7 @@
                     vnfs.pop();
                 }
 
-                //clear testcase array
-                while(testcases.length > 0) {
-                    testcases.pop();
-                }
+                testcases = {};
 
 
                 $.each(database, function(i,val){
@@ -190,14 +188,12 @@
                   return true;
                 });
 
-                //clear vnfs array
-                while(testcases.length > 0) {
-                    testcases.pop();
-                }
+                testcases = {};
 
                 $.each(database, function(i,val){
-                    if(val.usecase === currentUsecase && val.vnfname === currentVnf && !testcases.includes(val.testcase) ){           
-                        testcases.push(val.testcase);
+                    if(val.usecase === currentUsecase && val.vnfname === currentVnf  ){           
+                        // testcases.push(val.testcase);
+                        testcases[i] = val.testcase;
                     }
                 });
                 refreshTestcase();
@@ -206,30 +202,66 @@
 
 
             $("#testcase-selector").change(function(){
-                currentTestcase = "";
+                var currentTestcase;
+                var curKey;
                 $( "select#testcase-selector option:selected" ).each(function() {
                   currentTestcase = $( this ).text();
+                  curKey = $(this).val();
                   return true;
                 });
 
-                // $('table#testcase-table > tbody > tr > td > button[value="remove"]').closest("tr").remove();
 
-                var row = '<tr><td>' + currentTestcase +'</td><td><button class="action-button" value="remove">Remove</button></td></tr>';
-
-
-                $(row).hide().appendTo("table#testcase-table > tbody:last").fadeIn(300);
-                // same way
-                // var x = $(row).hide().fadeIn(10000);
-                // $("table#testcase-table > tbody:last").append(x);
-
-
-
-
-
+                var row = {'key': curKey, 'testcase': currentTestcase};
+                addCharttableRow(row);
 
             });
 
+            var count = 0;
+
+
+
+            function addCharttableRow(row){
+                if(!charttable.hasOwnProperty(row.key)){
+
+
+                    charttable[row.key] = row.testcase;
+
+                    var tablerow = '<tr value=' + row.key +' ><td>' + row.testcase +'</td><td><button class="action-button" value="remove">Remove</button></td></tr>';
+
+
+                    $(tablerow).hide().appendTo("table#testcase-table > tbody:last").fadeIn(300);                
+                    // same way
+                    // var x = $(row).hide().fadeIn(10000);
+                    // $("table#testcase-table > tbody:last").append(x);
+
+                    // console.log(database[row.key]);
+                    if(count === 0){
+                        loadChart(database[row.key], 'canvas');
+                    } else{
+                        addChart(database[row.key]);
+                        reloadChart();
+                    }
+
+                    count++;
+
+                } else {
+                    console.log("key: " + row.key + " already exist");
+                }
+
+
+            }
+
+
+
             $('table#testcase-table').on('click', 'button.action-button',function(){
+                var id = parseInt($(this).closest('tr').attr('value'));
+                // console.log("remove id: " + id);
+                // console.log($(this).closest('tr'));
+
+                id = database[id].id;
+                removeChart(id);
+                reloadChart();
+
                 $(this).closest('tr').remove();
             });
 
