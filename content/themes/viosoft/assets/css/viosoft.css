@@ -32,8 +32,12 @@ div.block-label {
 
 /******** table ********/
 
+table#testcase-table th,  table#testcase-table td {	
+	text-align: center;
+}
+
 table#testcase-table th#header-testcase {
-	width: 70%;
+	width: 80%;
 	border: 1px solid gray;
 }
 

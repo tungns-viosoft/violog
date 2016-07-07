@@ -27,8 +27,12 @@
 
         <script type="text/javascript">
             var database;
-            var usecases = [];
-            var vnfs= [];
+            var usecases = []; //usecase model to present data
+            var vnfs= []; //vnf model 
+
+            //testcase model
+            //key: index number in database to check weather this data is exist in table or not
+            //value: usecase
             var testcases = {};
 
             $.get(
@@ -42,6 +46,7 @@
                     }
                 });
                 refreshUsecase();
+                loadChart(database[0].size, "canvas");
             });
 
             function refreshUsecase(){
@@ -116,7 +121,6 @@
 
                 </div>  
             </div>
-
         </div>
 
         <div class="row">
@@ -127,23 +131,16 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="testcase-table">
                     <table id="testcase-table">
                         <tr>
                             <th id="header-testcase">Test case</th>
-                            <th id="header-action">Action</th>
+                            <th id="header-action">Remove</th>
                         </tr>
-                        <tr>
-                            <td>xxx</td>
-                            <td>yyy</td>
-                        </tr>
-
-
                     </table>
                 </div>
             </div>  
-
         </div>
 
 
@@ -153,6 +150,8 @@
             var currentVnf;
             // var currentTestcase;
 
+            //key: index number in database to check weather this data is exist in table or not
+            //value: usecase
             var charttable = {};
 
 
@@ -207,42 +206,47 @@
                 $( "select#testcase-selector option:selected" ).each(function() {
                   currentTestcase = $( this ).text();
                   curKey = $(this).val();
+
+                  $(this).removeAttr("selected");
+
                   return true;
                 });
 
-
                 var row = {'key': curKey, 'testcase': currentTestcase};
                 addCharttableRow(row);
-
             });
 
-            var count = 0;
-
-
-
+            // var count = 0;
+            
             function addCharttableRow(row){
                 if(!charttable.hasOwnProperty(row.key)){
-
-
-                    charttable[row.key] = row.testcase;
-
-                    var tablerow = '<tr value=' + row.key +' ><td>' + row.testcase +'</td><td><button class="action-button" value="remove">Remove</button></td></tr>';
-
-
-                    $(tablerow).hide().appendTo("table#testcase-table > tbody:last").fadeIn(300);                
+        
                     // same way
                     // var x = $(row).hide().fadeIn(10000);
                     // $("table#testcase-table > tbody:last").append(x);
 
                     // console.log(database[row.key]);
-                    if(count === 0){
-                        loadChart(database[row.key], 'canvas');
-                    } else{
-                        addChart(database[row.key]);
-                        reloadChart();
-                    }
+                    // var color;
+                    // if(count === 0){
+                    //     color = loadChart(database[row.key], 'canvas');
+                    // } else{
+                    //     color = addChart(database[row.key]);
+                    //     reloadChart();
+                    // }
+                    // count++;
 
-                    count++;
+                    var color = addChart(database[row.key]);
+                    reloadChart();
+
+
+
+
+                    //insert row in chart table and canvas
+                    charttable[row.key] = row.testcase;
+
+                    var tablerow = '<tr value=' + row.key + ' ><td style="background-color:' + color + '; font-weight: bold;">'  + row.testcase +'</td><td><button class="action-button" value="remove">X</button></td></tr>';
+
+                    $(tablerow).hide().appendTo("table#testcase-table > tbody:last").fadeIn(200);        
 
                 } else {
                     console.log("key: " + row.key + " already exist");
@@ -255,14 +259,18 @@
 
             $('table#testcase-table').on('click', 'button.action-button',function(){
                 var id = parseInt($(this).closest('tr').attr('value'));
-                // console.log("remove id: " + id);
-                // console.log($(this).closest('tr'));
+                
+                //delete in charttable model first
+                delete charttable[id];
 
+                //delete chart in graph
                 id = database[id].id;
                 removeChart(id);
                 reloadChart();
 
+                //remove in chart table html
                 $(this).closest('tr').remove();
+
             });
 
 

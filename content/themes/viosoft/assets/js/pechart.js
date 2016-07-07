@@ -45,19 +45,15 @@ var randomColor = function(opacity) {
 };
 
 
-window.onload = function() {
-
-};
-
-
 var myLine;
-function loadChart(input,canvasId){
-    config.labels = input.size.slice();
+function loadChart(labels,canvasId){
+    config.data.labels = labels.slice();
 
-    addChart(input);
+    // var color = addChart(input);
 
     var ctx = document.getElementById(canvasId).getContext("2d");   
     myLine = new Chart(ctx, config);
+    // return color;
 };
 
 function reloadChart(){
@@ -68,7 +64,7 @@ function reloadChart(){
 
 function addChart(input){
 
-
+    //caculate average of every lines in test
     var ln = input.lines[0].zero_loss.slice();
 
     for(var i = 1; i < input.lines.length; i++){
@@ -78,7 +74,8 @@ function addChart(input){
     }
 
     $.each(ln, function(i, l){
-        ln[i] = Math.round(ln[i] / input.lines.length);
+        // ln[i] = Math.round(ln[i] / input.lines.length);
+        ln[i] = (ln[i] / input.lines.length);
     });
 
     var background = randomColor(0.5);
@@ -98,18 +95,21 @@ function addChart(input){
 
     config.data.datasets.push(newset);
 
+    //reload chart
+    myLine.update();
+
+    return background;
 }
 
 
 function removeChart(id){
 
-    var index;
     $.each(config.data.datasets, function(i, val){
+
         if(val.id === id){
-            index = i;
+            config.data.datasets.splice(i,1);
             return false;
         } 
     });
 
-    config.data.datasets.splice(index,1);
 }
