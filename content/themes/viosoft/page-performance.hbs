@@ -26,7 +26,7 @@
     <div class="container">
 
         <script type="text/javascript">
-            var database;
+            var database = {};
             var usecases = []; //usecase model to present data
             var vnfs= []; //vnf model 
 
@@ -35,18 +35,17 @@
             //value: usecase
             var testcases = {};
 
-            $.get(
-                "http://localhost:1337/api/performance", function(data, status) {
-                database = data;
-                console.log(database);
-
-                $.each(database, function(i, val){
+            $.get("http://localhost:1337/api/performance", function(data, status) {
+                
+                $.each(data, function(i, val){
                     if(!usecases.includes(val.usecase)){
                         usecases.push(val.usecase);
                     }
+                    database[val.id] = val;
                 });
                 refreshUsecase();
-                loadChart(database[0].size, "canvas");
+                loadChart(data[0].size, "canvas");
+                console.log(database);
             });
 
             function refreshUsecase(){
@@ -58,7 +57,22 @@
             }
 
             function refreshTestcase(){ 
-                refreshSelector("#testcase-selector", testcases);
+                // refreshSelector("#testcase-selector", testcases);
+                $('#testcase-selector').empty();
+
+                $.each(testcases, function(i,val){
+
+                    var opt ;
+                    if(val.hasOwnProperty('selected') && val.selected === true){
+                        var color = val.color;
+                        opt = '<option  value=' + i + ' style="background-color:' + color + '" disabled >' +  val.testcase + '</option>';
+                    } else {
+                        opt = '<option  value=' + i + ' >' +  val.testcase + '</option>';
+                    }
+
+                    $('#testcase-selector').append(opt);
+                });
+
             }
 
 
@@ -192,7 +206,7 @@
                 $.each(database, function(i,val){
                     if(val.usecase === currentUsecase && val.vnfname === currentVnf  ){           
                         // testcases.push(val.testcase);
-                        testcases[i] = val.testcase;
+                        testcases[i] = val;
                     }
                 });
                 refreshTestcase();
@@ -214,6 +228,7 @@
 
                 var row = {'key': curKey, 'testcase': currentTestcase};
                 addCharttableRow(row);
+                refreshTestcase();
             });
 
             // var count = 0;
@@ -236,6 +251,9 @@
                     // count++;
 
                     var color = addChart(database[row.key]);
+                    database[row.key].selected = true;
+                    database[row.key].color = color; 
+
                     reloadChart();
 
 
@@ -262,14 +280,17 @@
                 
                 //delete in charttable model first
                 delete charttable[id];
+                delete database[id].color;
+                delete database[id].selected;
+
 
                 //delete chart in graph
-                id = database[id].id;
                 removeChart(id);
-                reloadChart();
 
-                //remove in chart table html
+                //remove row in chart table html
                 $(this).closest('tr').remove();
+
+                refreshTestcase();
 
             });
 

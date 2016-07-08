@@ -111,5 +111,5 @@ function removeChart(id){
             return false;
         } 
     });
-
+    reloadChart()
 }
