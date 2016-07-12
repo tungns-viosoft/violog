@@ -3,23 +3,13 @@
 {{!-- This is a page template. A page outputs content just like any other post, and has all the same
     attributes by default, but you can also customise it to behave differently if you prefer. --}}
 
-    {{!-- Everything inside the #post tags pulls data from the page --}}
-    {{#post}}
+{{!-- Everything inside the #post tags pulls data from the page --}}
+{{#post}}
 
 
 <script type="text/javascript" src="{{asset "js/Chart.js"}}"></script> 
 <script type="text/javascript" src="{{asset "js/pechart.js"}}"></script> 
 
-
-
-<header class="main-header post-head {{#if image}}" style="background-image: url({{image}}){{else}}no-cover{{/if}}">
-    <nav class="main-nav {{#if image}}overlay{{/if}} clearfix">
-        {{#if @blog.logo}}<a class="blog-logo" href="{{@blog.url}}"><img src="{{@blog.logo}}" alt="{{@blog.title}}" /></a>{{/if}}
-        {{#if @blog.navigation}}
-        <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
-        {{/if}}
-    </nav>
-</header>
 
 <main class="content" role="main" >
 
@@ -65,7 +55,7 @@
                     var opt ;
                     if(val.hasOwnProperty('selected') && val.selected === true){
                         var color = val.color;
-                        opt = '<option  value=' + i + ' style="background-color:' + color + '" disabled >' +  val.testcase + '</option>';
+                        opt = '<option  value=' + i + ' style="background-color:' + color + '" disabled >' +  val.testcase + '</option> ';
                     } else {
                         opt = '<option  value=' + i + ' >' +  val.testcase + '</option>';
                     }
@@ -156,7 +146,6 @@
                 </div>
             </div>  
         </div>
-
 
         <script type="text/javascript">
 
@@ -257,12 +246,10 @@
                     reloadChart();
 
 
-
-
                     //insert row in chart table and canvas
                     charttable[row.key] = row.testcase;
 
-                    var tablerow = '<tr value=' + row.key + ' ><td style="background-color:' + color + '; font-weight: bold;">'  + row.testcase +'</td><td><button class="action-button" value="remove">X</button></td></tr>';
+                    var tablerow = '<tr value=' + row.key + ' ><td style="background-color:' + color + '; font-weight: bold;">'  + row.testcase +'</td><td><button class="action-button" value="remove">&#10006</button></td></tr>';
 
                     $(tablerow).hide().appendTo("table#testcase-table > tbody:last").fadeIn(200);        
 
@@ -300,21 +287,6 @@
 
     </div>
 
-<!-- 
-    <article class="{{post_class}}">
-
-
-        <header class="post-header">
-            <h1 class="post-title">{{title}}</h1>
-        </header>
-
-        <section class="post-content">
-            {{content}}
-        </section>
-
-    </article>
-
--->
 
 </main>
 
