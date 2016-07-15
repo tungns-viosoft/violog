@@ -1,0 +1,270 @@
+{{!< default}}
+
+{{!-- This is a page template. A page outputs content just like any other post, and has all the same
+    attributes by default, but you can also customise it to behave differently if you prefer. --}}
+
+{{!-- Everything inside the #post tags pulls data from the page --}}
+{{#post}}
+
+{{> "site-header"}}
+
+<script type="text/javascript" src="{{asset "js/Chart.min.js"}}"></script> 
+<script type="text/javascript" src="{{asset "js/pechart.js"}}"></script> 
+
+<script type="text/javascript">
+    var database = {};
+    var usecases = []; //usecase model to present data
+    var vnfs= []; //vnf model 
+
+    //testcase model
+    //key: index number in database to check weather this data is exist in table or not
+    //value: usecase
+    var testcases = {};
+
+    $.get("http://192.168.0.220:1337/api/performance", function(data, status) {
+        
+        $.each(data, function(i, val){
+            if(!usecases.includes(val.usecase)){
+                usecases.push(val.usecase);
+            }
+            database[val.id] = val;
+        });
+        refreshUsecase();
+        loadChart(data[0].size, "canvas");
+        console.log(database);
+    });
+
+    function refreshUsecase(){
+        refreshSelector("#usecase-selector", usecases);
+    }
+
+    function refreshVnf(){ 
+        refreshSelector("#vnf-selector", vnfs);
+    }
+
+    function refreshTestcase(){ 
+        // refreshSelector("#testcase-selector", testcases);
+        $('#testcase-selector').empty();
+
+        $.each(testcases, function(i,val){
+
+            var opt ;
+            if(val.hasOwnProperty('selected') && val.selected === true){
+                var color = val.color;
+                opt = '<option  value=' + i + ' style="background-color:' + color + '" disabled >' +  val.testcase + '</option> ';
+            } else {
+                opt = '<option  value=' + i + ' >' +  val.testcase + '</option>';
+            }
+
+            $('#testcase-selector').append(opt);
+        });
+    }
+
+
+    function refreshSelector(id, arr ){
+        var sl = $(id);
+        sl.empty();
+        $.each(arr, function(i,val){
+            var opt = '<option  value=' + i + ' >' +  val + '</option>';
+            sl.append(opt);
+        });
+    }
+
+</script>
+
+<section class="container">
+    <section class="row"> 
+        <section class="col-md-4 col-sm-4">
+            <div class="usecase-block block">
+                <div class="block-label">
+                    <span id="usecase-label">Use case</span>
+                </div>
+
+                <div class="item-selector-wrapper">
+                    <select class="item-selector" id="usecase-selector" size="10">
+                    <!-- Option data here -->
+                    </select>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="col-md-4 col-sm-4">
+            <div class="vnf-block block">
+                <div class="block-label">
+                    <span id="vnf-label">VNF</span>                    
+                </div>
+
+                <div class="item-selector-wrapper">
+                    <select class="item-selector" id="vnf-selector" name="vnf-selector" size="10">
+                    </select>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="col-md-4 col-sm-4">
+            <div class="testcase-block block">
+                <div class="block-label">
+                    <span id="testcase-label">Test case</span>                    
+                </div>
+
+                <div class="item-selector-wrapper">
+                    <select class="item-selector" id="testcase-selector" name="testcase-selector" size="10">
+                    <!-- test case data here -->
+                    </select>
+                </div>
+
+            </div>  
+        </section>
+    </section>
+
+    <section class="row row-chart">
+        <section class="col-md-8">
+            <div class="chart">                    
+                <canvas id="canvas"></canvas>
+            </div>
+        </section>
+
+        <section class="col-md-3">
+            <div class="testcase-table">
+                <table id="testcase-table">
+                    <tr>
+                        <th id="header-testcase">Test case</th>
+                        <th id="header-action">Remove</th>
+                    </tr>
+                </table>
+            </div>
+        </section>  
+    </section>
+
+    <script type="text/javascript">
+
+        var currentUsecase;
+        var currentVnf;
+        // var currentTestcase;
+
+        //key: index number in database to check weather this data is exist in table or not
+        //value: usecase
+        var charttable = {};
+
+
+        $("#usecase-selector").change(function(){
+            currentUsecase = "";
+            $( "select#usecase-selector option:selected" ).each(function() {
+              currentUsecase = $( this ).text();
+              return true;
+            });
+
+            //clear vnfs array
+            while(vnfs.length > 0) {
+                vnfs.pop();
+            }
+
+            testcases = {};
+
+
+            $.each(database, function(i,val){
+                if(val.usecase === currentUsecase && !vnfs.includes(val.vnfname) ){           
+                    vnfs.push(val.vnfname);
+                }
+            });
+            refreshVnf();
+            refreshTestcase();
+
+        });
+
+        $("#vnf-selector").change(function(){
+            currentVnf = "";
+            $( "select#vnf-selector option:selected" ).each(function() {
+              currentVnf = $( this ).text();
+              return true;
+            });
+
+            testcases = {};
+
+            $.each(database, function(i,val){
+                if(val.usecase === currentUsecase && val.vnfname === currentVnf  ){           
+                    // testcases.push(val.testcase);
+                    testcases[i] = val;
+                }
+            });
+            refreshTestcase();
+
+        });
+
+
+        $("#testcase-selector").change(function(){
+            var currentTestcase;
+            var curKey;
+            $( "select#testcase-selector option:selected" ).each(function() {
+              currentTestcase = $( this ).text();
+              curKey = $(this).val();
+
+              $(this).removeAttr("selected");
+
+              return true;
+            });
+
+            var row = {'key': curKey, 'testcase': currentTestcase};
+            addCharttableRow(row);
+            refreshTestcase();
+        });
+
+        
+        function addCharttableRow(row){
+            if(!charttable.hasOwnProperty(row.key)){
+    
+                // same way
+                // var x = $(row).hide().fadeIn(10000);
+                // $("table#testcase-table > tbody:last").append(x);
+
+                var color = addChart(database[row.key]);
+                database[row.key].selected = true;
+                database[row.key].color = color; 
+
+                reloadChart();
+
+
+                //insert row in chart table and canvas
+                charttable[row.key] = row.testcase;
+
+                var tablerow = '<tr value=' + row.key + ' ><td style="background-color:' + color + '; font-weight: bold;">'  + row.testcase +'</td><td><button class="action-button" value="remove">&#10006</button></td></tr>';
+
+                $(tablerow).hide().appendTo("table#testcase-table > tbody:last").fadeIn(200);        
+
+            } else {
+                console.log("key: " + row.key + " already exist");
+            }
+        }
+
+
+        $('table#testcase-table').on('click', 'button.action-button',function(){
+            var id = parseInt($(this).closest('tr').attr('value'));
+            
+            //delete in charttable model first
+            delete charttable[id];
+            delete database[id].color;
+            delete database[id].selected;
+
+
+            //delete chart in graph
+            removeChart(id);
+
+            //remove row in chart table html
+            $(this).closest('tr').remove();
+
+            refreshTestcase();
+
+        });
+
+    </script>
+
+</section>
+
+
+
+
+
+{{/post}}

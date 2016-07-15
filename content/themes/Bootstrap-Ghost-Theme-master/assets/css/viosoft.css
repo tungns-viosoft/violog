@@ -1,0 +1,166 @@
+
+/********* NAVIGATION *********/
+#bs-navbar-collapse-1 ul li a.isActived {
+	font-weight: bold;
+	color: black;
+	background-color: #AFAFAC;
+
+}
+
+.navbar-right {
+	margin-right: 10px !important;
+}
+
+#menubar-viosoft.navbar-inverse  a, #menubar-viosoft.navbar-inverse button {
+	color: #9d9d9d;
+	border-color: #9d9d9d;
+}
+
+#menubar-viosoft.navbar-inverse  a:hover, #menubar-viosoft.navbar-inverse button:hover {
+	color: #fff;
+	border-color: #fff;
+	background-color: #535353;
+}
+/********* POST *********/
+footer.panel-footing{
+    position: relative;
+/*    margin: 6rem 0 0 0;  */
+    padding: 0.5em 0 1em 0; 
+    border-top: #EBF2F6 1px solid;
+}
+
+.share {
+    position: relative;
+    left: 2em;
+    /*top: 3rem;*/
+    /*right: 0;*/
+    width: 140px;
+}
+
+.fa-twitter-square {
+	color: #55acee;
+}
+
+.fa-facebook-square {
+	color: #3b5998;
+}
+
+.fa-google-plus-square {
+	color: #dd4b39;
+}
+
+/********* BODY *********/
+/*
+body {
+    padding-top: 70px;  Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. 
+}
+*/
+
+
+/********* INDEX ********/
+
+
+
+/********* PERFORMANCE **********/
+
+.usecase-block {
+
+}
+
+.nvf-block{
+
+}
+
+.testcase-block{
+}
+
+/*select {
+	width: 70%;
+}*/
+
+
+
+
+.block {
+	position: relative;
+	width: 80%;
+	float:left;
+	display: inline-block;
+	margin: 10px;
+	height: 200px;
+}
+
+.block-label {
+	padding-left: 10px;
+	font-size: 20px;
+	font-weight: bold;
+	color: #fff;
+	background-color: #203C49;
+}
+
+
+
+.item-selector-wrapper {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+select.item-selector {
+	width: 100%;
+	height: 100%;
+}
+
+select option {
+	border-top: #EBF2F6 1px solid;
+	border-bottom: #EBF2F6 1px solid;
+}
+
+#usecase-selector{
+}
+
+/******** chart ********/
+.row-chart {
+	margin-top: 3em;
+	padding-top: 1em;
+    border-top: #EBF2F6 1px solid;
+}
+
+
+/******** table ********/
+table#testcase-table {
+	width: 100%;
+	max-width: 300px;
+	margin-left: 20px;
+}
+
+table#testcase-table th,  table#testcase-table td {	
+	text-align: center;
+	padding: 2px 5px 2px 5px;
+}
+
+table#testcase-table th {
+	color: #fff;
+	background-color: #203C49;
+}
+
+table#testcase-table th#header-testcase {
+	width: 70%;
+	border: 1px solid gray;
+}
+
+
+table#testcase-table th#header-action {
+	border: 1px solid gray;
+}
+
+table#testcase-table tr td {
+	border: 1px solid gray;
+}
+
+table#testcase-table tr td button.action-button {
+	min-height: 10px;
+}
+
+
+
