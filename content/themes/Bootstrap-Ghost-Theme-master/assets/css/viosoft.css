@@ -7,6 +7,10 @@
 
 }
 
+.navbar , .container-fluid {
+	height: 50px;
+}
+
 .navbar-right {
 	margin-right: 10px !important;
 }
@@ -21,12 +25,47 @@
 	border-color: #fff;
 	background-color: #535353;
 }
+
+.navbar-header{
+	margin: 15px 0;
+}
+
+img.navbar-logo {
+	height: 100%;
+	width: auto;
+	margin: 0 auto;
+}
+
+
+
+	/***** HIDE NAV *****/
+
+.headroom {
+    will-change: transform;
+    transition: transform 200ms linear;
+}
+.headroom--pinned {
+    transform: translateY(0%);
+}
+.headroom--unpinned {
+    transform: translateY(-100%);
+}
+
+
+/********* BANNER **********/
+
+
+
 /********* POST *********/
 footer.panel-footing{
     position: relative;
 /*    margin: 6rem 0 0 0;  */
     padding: 0.5em 0 1em 0; 
     border-top: #EBF2F6 1px solid;
+}
+
+div.panel-post {
+	height: auto;
 }
 
 .share {
@@ -50,11 +89,13 @@ footer.panel-footing{
 }
 
 /********* BODY *********/
-/*
+
 body {
-    padding-top: 70px;  Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. 
+  	background-color: #F0F0F0;
+
+  	/*background-color: #F5F5F5;*/
+
 }
-*/
 
 
 /********* INDEX ********/

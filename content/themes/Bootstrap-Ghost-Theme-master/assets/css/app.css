@@ -5428,7 +5428,11 @@ pre > code {
   .panel-post > .panel-heading > .panel-title {
     margin: 10px;
     font-size: 30px;
-    text-shadow: 0 0 5px black; }
+    /* 
+    tungns
+    text-shadow: 5px 5px 5px red;
+    */ 
+    }
     .panel-post > .panel-heading > .panel-title:hover, .panel-post > .panel-heading > .panel-title:link, .panel-post > .panel-heading > .panel-title:visited, .panel-post > .panel-heading > .panel-title:active {
       color: white;
       text-decoration: none; }
@@ -5454,7 +5458,11 @@ pre > code {
     background-attachment: center;
     background-origin: center; }
     .panel-post > .panel-body.panel-body-profile {
-      min-height: 300px; }
+      /*
+      tungns
+      min-height: 300px; 
+      */
+    }
 
 img.emoji {
   width: 16px;

@@ -40,8 +40,17 @@
             <header class="panel-heading">
                     <h3 class="panel-title">{{author.name}}</h3>
             </header>
+            {{#if author.image}}
             <div class="panel-body panel-body-profile" style="background-image: url('{{author.image}}')"></div>
+            {{else}}
+            <!-- <img src="{{asset "images/user-small-icon.png"}}"> -->
+            <div class="panel-body panel-body-profile" >
+                <i class="fa fa-user" style="font-size: 10em;"></i>
+            </div>
+            {{/if}}
+            {{#if author.bio}}
             <footer class="panel-footer">{{author.bio}}</footer>
+            {{/if}}
         </div>
     </aside>
   </section>
