@@ -47,13 +47,14 @@
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
     {{#if post.image}}
-      <header class="intro-header" style="background-image: url('{{post.image}}')">
+        <header class="intro-header" style="background-image: url('{{post.image}}');">
     {{else}}
-      {{#if @blog.cover}}
-        <header class="intro-header" style="background-image: url('{{@blog.cover}}')">
-      {{else}}
+
+    {{#if @blog.cover}}
+        <header class="intro-header" style="background-image: url('{{@blog.cover}}');">
+    {{else}}
         <header class="intro-header">
-      {{/if}}
+    {{/if}}
     {{/if}}
         <section class="container">
             <section class="row">

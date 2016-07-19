@@ -5432,9 +5432,14 @@ pre > code {
     text-shadow: 0 0 5px black;
 
     }
-    .panel-post > .panel-heading > .panel-title:hover, .panel-post > .panel-heading > .panel-title:link, .panel-post > .panel-heading > .panel-title:visited, .panel-post > .panel-heading > .panel-title:active {
+    .panel-post > .panel-heading > .panel-title:hover, 
+    .panel-post > .panel-heading > .panel-title:link, 
+    .panel-post > .panel-heading > .panel-title:visited, 
+    .panel-post > .panel-heading > .panel-title:active {
       color: white;
       text-decoration: none; }
+
+      /*tungns lam mo*/
   .panel-post > .panel-heading.panel-heading-loop {
     background-color: rgba(255, 255, 255, 0);
     height: 300px;
@@ -5442,10 +5447,14 @@ pre > code {
     border: none; }
     .panel-post > .panel-heading.panel-heading-loop:hover {
       background-color: rgba(0, 0, 0, 0.8); }
+
+
+
     .panel-post > .panel-heading.panel-heading-loop > .panel-title {
       margin-top: 20px;
       font-size: 30px; }
-    .panel-post > .panel-heading.panel-heading-loop > a:hover, .panel-post > .panel-heading.panel-heading-loop a:focus {
+    .panel-post > .panel-heading.panel-heading-loop > a:hover, 
+    .panel-post > .panel-heading.panel-heading-loop a:focus {
       text-decoration: none; }
   .panel-post > .panel-body {
     min-height: 150px;

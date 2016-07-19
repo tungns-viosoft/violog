@@ -120,8 +120,6 @@ body {
 }*/
 
 
-
-
 .block {
 	position: relative;
 	width: 80%;
@@ -165,6 +163,19 @@ select option {
 	margin-top: 3em;
 	padding-top: 1em;
     border-top: #EBF2F6 1px solid;
+}
+
+
+/********* benchmarks ********/
+
+canvas.chart-canvas{
+
+}
+
+table.info-table th, table.info-table td{
+	border: 1px solid black;
+	padding: 5px 20px;
+
 }
 
 

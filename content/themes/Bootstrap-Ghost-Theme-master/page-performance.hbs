@@ -12,6 +12,7 @@
 <script type="text/javascript" src="{{asset "js/pechart.js"}}"></script> 
 
 <script type="text/javascript">
+    var mainChart;
     var database = {};
     var usecases = []; //usecase model to present data
     var vnfs= []; //vnf model 
@@ -30,8 +31,9 @@
             database[val.id] = val;
         });
         refreshUsecase();
-        loadChart(data[0].size, "canvas");
-        console.log(database);
+
+        init(data[0].size);
+        mainChart = loadChart("canvas");
     });
 
     function refreshUsecase(){
@@ -59,7 +61,6 @@
             $('#testcase-selector').append(opt);
         });
     }
-
 
     function refreshSelector(id, arr ){
         var sl = $(id);
@@ -101,13 +102,12 @@
                 </div>
 
             </div>
-
         </section>
 
         <section class="col-md-4 col-sm-4">
             <div class="testcase-block block">
                 <div class="block-label">
-                    <span id="testcase-label">Test case</span>                    
+                    <span id="testcase-label">Test case</span>
                 </div>
 
                 <div class="item-selector-wrapper">
@@ -220,13 +220,10 @@
                 // var x = $(row).hide().fadeIn(10000);
                 // $("table#testcase-table > tbody:last").append(x);
 
-                var color = addChart(database[row.key]);
+                var color = addChart(database[row.key], mainChart);
                 database[row.key].selected = true;
                 database[row.key].color = color; 
-
-                reloadChart();
-
-
+    
                 //insert row in chart table and canvas
                 charttable[row.key] = row.testcase;
 
@@ -250,7 +247,7 @@
 
 
             //delete chart in graph
-            removeChart(id);
+            removeChart(id, mainChart);
 
             //remove row in chart table html
             $(this).closest('tr').remove();

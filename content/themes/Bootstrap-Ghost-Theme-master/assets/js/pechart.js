@@ -44,25 +44,25 @@ var randomColor = function(opacity) {
     return 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',' + (opacity || '.3') + ')';
 };
 
-
-var myLine;
-function loadChart(labels,canvasId){
+function init(labels){
     config.data.labels = labels.slice();
-
-    // var color = addChart(input);
-
-    var ctx = document.getElementById(canvasId).getContext("2d");   
-    myLine = new Chart(ctx, config);
-    // return color;
-};
-
-function reloadChart(){
-    myLine.update();
 }
 
 
+// var myLine;
+function loadChart(canvasId){    
+    var ctx = document.getElementById(canvasId).getContext("2d");   
+    var myLine = new Chart(ctx, $.extend(true,{},config));
+    return myLine;
+};
 
-function addChart(input){
+// function reloadChart(){
+//     myLine.update();
+// }
+
+
+
+function addChart(input, chart){
 
     //caculate average of every lines in test
     var ln = input.lines[0].zero_loss.slice();
@@ -93,23 +93,23 @@ function addChart(input){
         id: input.id,
     }
 
-    config.data.datasets.push(newset);
+    chart.data.datasets.push(newset);
 
     //reload chart
-    myLine.update();
+    chart.update();
 
     return background;
 }
 
 
-function removeChart(id){
+function removeChart(id,chart){
 
-    $.each(config.data.datasets, function(i, val){
+    $.each(chart.data.datasets, function(i, val){
 
         if(val.id === id){
-            config.data.datasets.splice(i,1);
+            chart.data.datasets.splice(i,1);
             return false;
         } 
     });
-    reloadChart()
+    chart.update();
 }
