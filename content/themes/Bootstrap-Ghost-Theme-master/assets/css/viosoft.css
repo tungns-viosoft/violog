@@ -7,9 +7,9 @@
 
 }
 
-.navbar , .container-fluid {
+/*.navbar , .container-fluid {
 	height: 50px;
-}
+}*/
 
 .navbar-right {
 	margin-right: 10px !important;
@@ -26,9 +26,9 @@
 	background-color: #535353;
 }
 
-.navbar-header{
+/*.navbar-header{
 	margin: 15px 0;
-}
+}*/
 
 img.navbar-logo {
 	height: 100%;
