@@ -8,7 +8,8 @@ var config = {
     options: {
         responsive: true,
         legend: {
-            position: 'bottom',
+            // position: 'bottom', //show enable/disable at bottom
+            display: false,
         },
         hover: {
             mode: 'label'

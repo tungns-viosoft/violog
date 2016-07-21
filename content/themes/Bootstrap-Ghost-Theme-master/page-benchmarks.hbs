@@ -1,0 +1,152 @@
+{{!< default}}
+
+{{!-- This is a page template. A page outputs content just like any other post, and has all the same
+    attributes by default, but you can also customise it to behave differently if you prefer. --}}
+
+{{!-- Everything inside the #post tags pulls data from the page --}}
+{{#post}}
+
+{{> "site-header"}}
+
+<script type="text/javascript" src="{{asset "js/Chart.min.js"}}"></script> 
+<script type="text/javascript" src="{{asset "js/pechart.js"}}"></script> 
+
+
+
+<section class="container">
+	<section class="row">
+		
+	</section>
+</section>
+
+
+<section class="container" id="chart-container">
+
+
+</section>
+
+<script type="text/javascript">
+
+	var database = {};
+    var usecases = []; //usecase model to present data
+
+    var canvases = {};
+
+	$.get("http://192.168.0.220:1337/api/performance", function(data, status) {
+        
+        $.each(data, function(i, val){
+            if(!usecases.includes(val.usecase)){
+                usecases.push(val.usecase);
+            }
+            database[val.id] = val;
+        });
+
+        init(data[0].size);
+        render();
+    });
+
+	function render(){
+
+		var container = $('#chart-container');
+		console.log(database);
+		$.each(database, function(i, val){
+			var canvasId = 'canvas-' + i;
+
+
+			var chartPanel = '<div class="col-md-6">'
+			+ '<canvas class="chart-canvas" id="' + canvasId +  '" />'
+			+ '</div>';
+
+			var chartInfoHardware = '<div class="col-md-3">' 			
+			+ '<table class="info-table info-hardware">'
+			+ '<tr>'
+			+ '<th colspan="2">Hardware</th>'
+			+ '</tr>';
+
+
+			$.each(val.vnf.hw, function(i,val){
+				chartInfoHardware += '<tr>'
+				+ '<td>'
+
+				+	i
+				
+				+ '</td>'
+				+ '<td>'
+
+				+ 	val
+				
+				+ '</td>'
+				+ '</tr>'
+			});
+		
+			chartInfoHardware += '</table>'
+			+ '</div>';
+
+			var chartInfoSoftware = '<div class="col-md-3">' 			
+			+ '<table class="info-table info-software">'
+			+ '<tr>'
+			+ '<th colspan="2">Software</th>'
+			+ '</tr>';
+
+			$.each(val.vnf.sw, function(i,val){
+				chartInfoSoftware += '<tr>'
+				+ '<td>'
+
+				+	val.name
+				
+				+ '</td>'
+				+ '<td>'
+
+				+ 	val.version
+				
+				+ '</td>'
+				+ '</tr>'
+			});		
+
+			chartInfoSoftware += '</table>'
+			+ '</div>';
+
+
+			var chartRow = '<div class="row row-chart-benchmarks" > ' 
+			+ chartPanel 
+			+ chartInfoHardware 
+			+ chartInfoSoftware
+			+ '</div>';
+
+			
+			container.append(chartRow);
+			var myChart = loadChart(canvasId);
+			addChart(val, myChart);
+			canvases[canvasId] = myChart;
+		});
+
+		$('#canvas-2').closest('div.row-chart-benchmarks').css('opacity', '0.4');
+	}
+
+
+
+
+	
+
+</script>
+
+<div class="col-md-4" >
+	<table class="info-table">
+		<tr>
+			<th>name</th>
+			<th>value</th>
+		</tr>
+		<tr>
+			<td>
+				
+			</td>
+			<td>
+				
+			</td>
+		</tr>
+
+
+	</table>
+</div>
+
+{{/post}}

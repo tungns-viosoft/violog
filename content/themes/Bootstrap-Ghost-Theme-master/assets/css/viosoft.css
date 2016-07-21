@@ -1,3 +1,22 @@
+/********* GENERAL **********/
+button {
+	background-color: #66D9EF;
+}
+
+table {
+	background-color: white;
+}
+
+table th {
+	color: #fff;
+	background-color: #203C49;
+	/*background: linear-gradient(to bottom right, #203C49, #2E5669);*/
+}
+
+select {
+	border: 2px solid  #203C49;
+	border-radius: 0 0 5px 5px ;
+}
 
 /********* NAVIGATION *********/
 #bs-navbar-collapse-1 ul li a.isActived {
@@ -45,7 +64,7 @@ img.navbar-logo {
     transition: transform 200ms linear;
 }
 .headroom--pinned {
-    transform: translateY(0%);
+    transform: translateX(0%);
 }
 .headroom--unpinned {
     transform: translateY(-100%);
@@ -97,6 +116,10 @@ body {
 
 }
 
+.intro-header{
+	margin-top: 50px;
+}
+
 
 /********* INDEX ********/
 
@@ -105,11 +128,9 @@ body {
 /********* PERFORMANCE **********/
 
 .usecase-block {
-
 }
 
 .nvf-block{
-
 }
 
 .testcase-block{
@@ -126,12 +147,13 @@ body {
 	float:left;
 	display: inline-block;
 	margin: 10px;
-	height: 200px;
+	height: 230px;
 }
 
 .block-label {
 	padding-left: 10px;
 	font-size: 20px;
+	height: 30px;
 	font-weight: bold;
 	color: #fff;
 	background-color: #203C49;
@@ -169,17 +191,36 @@ select option {
 /********* benchmarks ********/
 
 canvas.chart-canvas{
-
+	background-color: white;
+	border: 3px solid  #203C49;
+	padding: 20px;
+	
 }
 
 table.info-table th, table.info-table td{
-	border: 1px solid black;
-	padding: 5px 20px;
-
+	border: 1px solid #203C49;
+	padding: 0px 20px;
 }
 
+table.info-table {
+	width: 100%;
+	max-width: 300px;
+	margin: 10px;
+}
+
+table.info-table tr td:first-child {
+	width: 40%;
+}
+
+.row-chart-benchmarks {
+	padding-bottom: 3em;
+	padding-top: 3em;
+    border-bottom: rgba(32, 60, 73, 0.2) 1px solid;
+}
 
 /******** table ********/
+
+
 table#testcase-table {
 	width: 100%;
 	max-width: 300px;
@@ -188,13 +229,9 @@ table#testcase-table {
 
 table#testcase-table th,  table#testcase-table td {	
 	text-align: center;
-	padding: 2px 5px 2px 5px;
+	/*padding: 2px 5px 2px 5px;*/
 }
 
-table#testcase-table th {
-	color: #fff;
-	background-color: #203C49;
-}
 
 table#testcase-table th#header-testcase {
 	width: 70%;
@@ -204,6 +241,7 @@ table#testcase-table th#header-testcase {
 
 table#testcase-table th#header-action {
 	border: 1px solid gray;
+	height: 30px;
 }
 
 table#testcase-table tr td {
@@ -212,6 +250,7 @@ table#testcase-table tr td {
 
 table#testcase-table tr td button.action-button {
 	min-height: 10px;
+	margin: 0 0;
 }
 
 
