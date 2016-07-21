@@ -113,14 +113,18 @@
 			+ chartInfoSoftware
 			+ '</div>';
 
+			var $chartRow = $(chartRow).hide().fadeIn(1000);
 			
-			container.append(chartRow);
+			container.append($chartRow);
+
+
+
 			var myChart = loadChart(canvasId);
 			addChart(val, myChart);
 			canvases[canvasId] = myChart;
 		});
 
-		$('#canvas-2').closest('div.row-chart-benchmarks').css('opacity', '0.4');
+		//$('#canvas-2').closest('div.row-chart-benchmarks').css('display', 'none');
 	}
 
 
@@ -130,23 +134,5 @@
 
 </script>
 
-<div class="col-md-4" >
-	<table class="info-table">
-		<tr>
-			<th>name</th>
-			<th>value</th>
-		</tr>
-		<tr>
-			<td>
-				
-			</td>
-			<td>
-				
-			</td>
-		</tr>
-
-
-	</table>
-</div>
 
 {{/post}}

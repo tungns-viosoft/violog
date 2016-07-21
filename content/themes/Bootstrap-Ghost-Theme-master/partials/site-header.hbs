@@ -40,27 +40,48 @@
         var headroom  = new Headroom(myElement);
         // initialise
         headroom.init(); 
+
+        
+        $(document).ready(function (){
+            var url = window.location.pathname;
+
+            $("#bs-example-navbar-collapse-1 ul li a").each(function(){
+                if( this.pathname === url){    
+                    $(this).addClass('isActived');
+                }
+            });
+        });
+
+
+
+
     </script>
 
     
 
-    <!-- Page Header -->
-    <!-- Set your background image for this header on the line below. -->
-    {{#if post.image}}
-        <header class="intro-header" style="background-image: url('{{post.image}}');">
-    {{else}}
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<!-- {{#if post.image}}
+    <header class="intro-header" style="background-image: url('{{post.image}}');">
+{{else}}
 
-    {{#if @blog.cover}}
-        <header class="intro-header" style="background-image: url('{{@blog.cover}}');">
-    {{else}}
-        <header class="intro-header">
-    {{/if}}
-    {{/if}}
+{{#if @blog.cover}}
+    <header class="intro-header" style="background-image: url('{{@blog.cover}}');">
+{{else}}
+    <header class="intro-header">
+{{/if}}
+{{/if}} -->
+
+    <header class="banner-header" >
         <section class="container">
             <section class="row">
-                <section class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <section class="site-heading">
-                        <!-- 
+                <!-- <section class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+
+                <section class="col-md-12">
+                    
+                    <img class="banner" src="{{@blog.cover}}" />
+
+                    <!-- <section class="site-heading">                        
                         {{#if @blog.logo}}
                         <div class="img-logo-container">
                             <a href="{{@blog.url}}">
@@ -68,11 +89,12 @@
                             </a>
                         </div>
                         {{/if}}
-                        -->
                         <h1>{{@blog.title}}</h1>
                         <span class="subheading">{{@blog.description}}</span>
-                    </section>
+                    </section> -->
                 </section>
             </section>
         </section>
+
     </header>
+
