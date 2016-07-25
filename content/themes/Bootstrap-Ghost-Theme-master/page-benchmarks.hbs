@@ -15,13 +15,31 @@
 
 <section class="container">
 	<section class="row">
-		
+		<div class="col-md-3">
+			
+		</div>
 	</section>
 </section>
 
 
-<section class="container" id="chart-container">
+<section class="container" >
+	<section class="row">
+		<div class="col-md-9" id="chart-container" >
+			
+		</div>
 
+		<div class="col-md-3">
+			<div class="side-bar filter">
+				<header class="filter-header">
+					Hardware branch
+				</header>
+				<div class="filter-content">
+					abc
+				</div>
+			</div>
+			
+		</div>
+	</section>
 
 </section>
 
@@ -45,19 +63,26 @@
         render();
     });
 
+
+	function filter(){
+
+	}
+
+
 	function render(){
 
 		var container = $('#chart-container');
-		console.log(database);
+		container.empty();
+
 		$.each(database, function(i, val){
 			var canvasId = 'canvas-' + i;
 
 
-			var chartPanel = '<div class="col-md-6">'
+			var chartPanel = '<div class="chart-pos">'
 			+ '<canvas class="chart-canvas" id="' + canvasId +  '" />'
 			+ '</div>';
 
-			var chartInfoHardware = '<div class="col-md-3">' 			
+			var chartInfo = '<div class="table-pos">' 			
 			+ '<table class="info-table info-hardware">'
 			+ '<tr>'
 			+ '<th colspan="2">Hardware</th>'
@@ -65,7 +90,7 @@
 
 
 			$.each(val.vnf.hw, function(i,val){
-				chartInfoHardware += '<tr>'
+				chartInfo += '<tr>'
 				+ '<td>'
 
 				+	i
@@ -79,17 +104,15 @@
 				+ '</tr>'
 			});
 		
-			chartInfoHardware += '</table>'
-			+ '</div>';
+			// chartInfo += '</table>'
+			// + '</div>';
 
-			var chartInfoSoftware = '<div class="col-md-3">' 			
-			+ '<table class="info-table info-software">'
-			+ '<tr>'
+			chartInfo += '<tr>'
 			+ '<th colspan="2">Software</th>'
 			+ '</tr>';
 
 			$.each(val.vnf.sw, function(i,val){
-				chartInfoSoftware += '<tr>'
+				chartInfo += '<tr>'
 				+ '<td>'
 
 				+	val.name
@@ -103,14 +126,13 @@
 				+ '</tr>'
 			});		
 
-			chartInfoSoftware += '</table>'
+			chartInfo += '</table>'
 			+ '</div>';
 
 
-			var chartRow = '<div class="row row-chart-benchmarks" > ' 
+			var chartRow = '<div class="row-chart"> ' 
 			+ chartPanel 
-			+ chartInfoHardware 
-			+ chartInfoSoftware
+			+ chartInfo
 			+ '</div>';
 
 			var $chartRow = $(chartRow).hide().fadeIn(1000);

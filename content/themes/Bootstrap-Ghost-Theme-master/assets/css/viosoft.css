@@ -13,6 +13,11 @@ table th {
 	/*background: linear-gradient(to bottom right, #203C49, #2E5669);*/
 }
 
+table th, table td{
+	border: 1px solid #203C49;
+	padding: 0px 20px;
+}
+
 select {
 	border: 2px solid  #203C49;
 	/*border-radius: 0 0 5px 5px ;*/
@@ -177,7 +182,6 @@ body {
 }
 
 
-
 .item-selector-wrapper {
 	display: block;
 	width: 100%;
@@ -192,47 +196,73 @@ select.item-selector {
 select option {
 	border-top: #EBF2F6 1px solid;
 	border-bottom: #EBF2F6 1px solid;
+	padding-left: 10px;
 }
 
 #usecase-selector{
 }
 
-/******** chart ********/
-.row-chart {
-	margin-top: 3em;
-	padding-top: 1em;
-    border-top: #EBF2F6 1px solid;
+/******** filter ********/
+.filter {
+	border: 1px solid  #203C49;
 }
 
+.filter-header {
+	color: #fff;
+	background-color: #203C49;
+	font-size: 1em;
+	font-weight: bold;
+	padding-left: 20px;
+} 
+
+.filter-content {
+	background-color: #fff;
+	padding-left: 20px;
+}
 
 /********* benchmarks ********/
 
 canvas.chart-canvas{
 	background-color: white;
 	border: 3px solid  #203C49;
-	padding: 20px;
+	padding: 10px;
 	
 }
 
-table.info-table th, table.info-table td{
-	border: 1px solid #203C49;
-	padding: 0px 20px;
-}
+
 
 table.info-table {
 	width: 100%;
 	max-width: 300px;
-	margin: 10px;
 }
 
 table.info-table tr td:first-child {
 	width: 40%;
 }
 
-.row-chart-benchmarks {
+.row-chart {
+	display: block;
 	padding-bottom: 3em;
 	padding-top: 3em;
     border-bottom: rgba(32, 60, 73, 0.2) 1px solid;
+
+	vertical-align: top;
+}
+
+.chart-pos {
+	display: inline-block;
+	/*float: left;*/
+	width: 65%;    
+	vertical-align: top;
+	padding: 0 10px 0 0;
+}
+
+.table-pos {
+	display: inline-block;
+	/*float: right;*/
+	width: 35%;    
+	vertical-align: top;
+	padding: 0 10px;
 }
 
 /******** table ********/
