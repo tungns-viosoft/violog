@@ -23,6 +23,23 @@ select {
 	/*border-radius: 0 0 5px 5px ;*/
 }
 
+/*.col-md-12 { 
+	padding: 0;
+}
+*/
+
+/********* TRANSITION *********/
+.fadeout {
+    display: none;
+    transition: opacity 0.3s ease-out;
+    /*opacity: 0; */
+}
+
+.fadein {
+    /*opacity: 1;*/
+    display: block;
+}
+
 /********* NAVIGATION *********/
 #bs-example-navbar-collapse-1 ul li a.isActived {
 	font-weight: bold;
@@ -84,7 +101,7 @@ img.navbar-logo {
 /********* BANNER **********/
 
 .banner-header {
-	margin: 50px 0;
+	margin: 50px 0 0;
 	min-height: 150px;
 }
 
@@ -202,23 +219,7 @@ select option {
 #usecase-selector{
 }
 
-/******** filter ********/
-.filter {
-	border: 1px solid  #203C49;
-}
 
-.filter-header {
-	color: #fff;
-	background-color: #203C49;
-	font-size: 1em;
-	font-weight: bold;
-	padding-left: 20px;
-} 
-
-.filter-content {
-	background-color: #fff;
-	padding-left: 20px;
-}
 
 /********* benchmarks ********/
 
@@ -238,12 +239,19 @@ table.info-table {
 
 table.info-table tr td:first-child {
 	width: 40%;
+	/*font-weight: 600;*/
+}
+
+#chart-container {
+	background-color: #F9F9F9;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .row-chart {
 	display: block;
-	padding-bottom: 3em;
-	padding-top: 3em;
+	padding-bottom: 2em;
+	padding-top: 2em;
     border-bottom: rgba(32, 60, 73, 0.2) 1px solid;
 
 	vertical-align: top;
@@ -263,6 +271,32 @@ table.info-table tr td:first-child {
 	width: 35%;    
 	vertical-align: top;
 	padding: 0 10px;
+}
+
+.side-bar {
+	margin-right: 0;
+}
+
+.filter {
+	margin-top: 2em;
+}
+
+.filter-header {
+	color: #fff;
+	background-color: #07C;
+	font-size: 20px;
+	text-align: center;
+	font-weight: bold;
+	border-radius: 5px 5px 0 0;
+
+} 
+
+.filter-content {
+	background-color: #fff;
+	color: #07C;
+	font-weight: 600;
+	padding: 10px 0 10px 10px;
+	border: 1px solid  #07C;
 }
 
 /******** table ********/

@@ -11,31 +11,34 @@
 <script type="text/javascript" src="{{asset "js/Chart.min.js"}}"></script> 
 <script type="text/javascript" src="{{asset "js/pechart.js"}}"></script> 
 
-
-
-<section class="container">
+<!-- <section class="container">
 	<section class="row">
 		<div class="col-md-3">
 			
 		</div>
 	</section>
-</section>
+</section> -->
 
 
 <section class="container" >
 	<section class="row">
-		<div class="col-md-9" id="chart-container" >
+		<div class="col-md-10" >
+			<div id="chart-container" >
+				
+			</div>
 			
 		</div>
 
-		<div class="col-md-3">
-			<div class="side-bar filter">
-				<header class="filter-header">
-					Hardware branch
-				</header>
-				<div class="filter-content">
-					abc
+		<div class="col-md-2" >
+			<div class="side-bar" id="filter-container">
+				<div class="filter filter-brand">
+					<header class="filter-header">
+						Hardware brand
+					</header>
+					<ul style="list-style: none;" class="filter-content" id="hardware-brand-filter-content">
+					</ul>
 				</div>
+				
 			</div>
 			
 		</div>
@@ -43,12 +46,15 @@
 
 </section>
 
+
 <script type="text/javascript">
 
 	var database = {};
     var usecases = []; //usecase model to present data
 
     var canvases = {};
+    var hardwareBrand = [];
+
 
 	$.get("http://192.168.0.220:1337/api/performance", function(data, status) {
         
@@ -57,15 +63,80 @@
                 usecases.push(val.usecase);
             }
             database[val.id] = val;
+
+            if(!hardwareBrand.includes(val.vnf.hw.brand)){
+            	hardwareBrand.push(val.vnf.hw.brand);
+            }
+
         });
 
         init(data[0].size);
         render();
+
+        initFilter();
     });
 
 
-	function filter(){
+	function initFilter(){
 
+		var brandSelection = '';
+
+		$.each(hardwareBrand, function(i,val){
+			var id = 'brandid-' + val;
+
+			brandSelection += '<li><label><input type="checkbox" value="' + val +'" id="' + id + '"/> ' + val + '</label></li>';
+
+		});
+
+		$('#hardware-brand-filter-content').append(brandSelection);
+	}
+
+	var checkedBrand = [];
+
+	$('#hardware-brand-filter-content').on('change','input',function(){
+
+		if(this.checked){
+			checkedBrand.push($(this).val());
+		} else {
+			checkedBrand.splice(checkedBrand.indexOf($(this).val()), 1);
+		}
+		// console.log(checkedBrand);
+
+		refreshChartContainer();
+
+	});
+
+
+	function refreshChartContainer(){
+		if(checkedBrand.length <= 0){
+			$('div.row-chart').each(function(i, val){
+				// $(this).css('display', 'block');
+				$(this).show();
+			});
+		} else {
+			$('div.row-chart').each(function(i, val){
+
+				var id = $(this).attr('value');
+
+				if( ! checkedBrand.includes(database[id].vnf.hw.brand)){
+					$(this).fadeOut(500,function(){
+						$(this).hide();
+					});
+					// $(this).css('display', 'block');
+					// $(this).removeClass('fadein');		
+					// $(this).addClass('fadeout');
+				} else {
+
+					$(this).fadeIn(500,function(){
+						$(this).show();
+					});
+					// $(this).css('display', 'none');
+					// $(this).removeClass('fadeout');					
+					// $(this).addClass('fadein');
+				}
+
+			});
+		}
 	}
 
 
@@ -89,7 +160,7 @@
 			+ '</tr>';
 
 
-			$.each(val.vnf.hw, function(i,val){
+			$.each(val.vnf.hw, function(i,val1){
 				chartInfo += '<tr>'
 				+ '<td>'
 
@@ -98,7 +169,7 @@
 				+ '</td>'
 				+ '<td>'
 
-				+ 	val
+				+ 	val1
 				
 				+ '</td>'
 				+ '</tr>'
@@ -111,16 +182,16 @@
 			+ '<th colspan="2">Software</th>'
 			+ '</tr>';
 
-			$.each(val.vnf.sw, function(i,val){
+			$.each(val.vnf.sw, function(i,val2){
 				chartInfo += '<tr>'
 				+ '<td>'
 
-				+	val.name
+				+	val2.name
 				
 				+ '</td>'
 				+ '<td>'
 
-				+ 	val.version
+				+ 	val2.version
 				
 				+ '</td>'
 				+ '</tr>'
@@ -130,7 +201,7 @@
 			+ '</div>';
 
 
-			var chartRow = '<div class="row-chart"> ' 
+			var chartRow = '<div class="row-chart" value="' + i + '"> ' 
 			+ chartPanel 
 			+ chartInfo
 			+ '</div>';
@@ -143,7 +214,7 @@
 
 			var myChart = loadChart(canvasId);
 			addChart(val, myChart);
-			canvases[canvasId] = myChart;
+			// canvases[chartRowId] = myChart;
 		});
 
 		//$('#canvas-2').closest('div.row-chart-benchmarks').css('display', 'none');
@@ -158,3 +229,5 @@
 
 
 {{/post}}
+
+
