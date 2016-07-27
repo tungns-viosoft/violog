@@ -32,7 +32,7 @@ var config = {
         },
         title: {
             display: true,
-            text: 'CAW test'
+            text: ''
         }
     }
 };
@@ -51,9 +51,12 @@ function init(labels){
 
 
 // var myLine;
-function loadChart(canvasId){    
-    var ctx = document.getElementById(canvasId).getContext("2d");   
-    var myLine = new Chart(ctx, $.extend(true,{},config));
+function loadChart(canvasId, name = 'CAW test', type = 'line'){    
+    var ctx = document.getElementById(canvasId).getContext("2d");
+    var myConfig = $.extend(true,{},config);
+    myConfig.type = type;
+    myConfig.options.title.text = name;
+    var myLine = new Chart(ctx, myConfig);
     return myLine;
 };
 
@@ -79,7 +82,7 @@ function addChart(input, chart){
         ln[i] = (ln[i] / input.lines.length);
     });
 
-    var background = randomColor(0.5);
+    var background = randomColor(1);
 
     var newset = {
         label: input.session,

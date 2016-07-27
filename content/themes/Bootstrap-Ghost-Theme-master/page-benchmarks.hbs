@@ -22,8 +22,19 @@
 
 <section class="container" >
 	<section class="row">
-		<div class="col-md-10" >
-			<div id="chart-container" >
+		<div class="col-md-10" >		
+
+			<div class="chart-container">
+				<div class="chart-option">
+					<select id="chart-type-selector">
+						<option value="line">Line</option>
+						<option value="bar">Bar</option>
+					</select>
+				</div>
+
+				<div id="chart-container">
+					
+				</div>
 				
 			</div>
 			
@@ -140,6 +151,7 @@
 	}
 
 
+
 	function render(){
 
 		var container = $('#chart-container');
@@ -156,7 +168,10 @@
 			var chartInfo = '<div class="table-pos">' 			
 			+ '<table class="info-table info-hardware">'
 			+ '<tr>'
-			+ '<th colspan="2">Hardware</th>'
+			+ '<th colspan="2">' + val.vnfname + '</th>'
+			+ '</tr>'
+			+ '<tr>'
+			+ '<td colspan="2"  style="font-weight:600">Hardware</th>'
 			+ '</tr>';
 
 
@@ -179,7 +194,7 @@
 			// + '</div>';
 
 			chartInfo += '<tr>'
-			+ '<th colspan="2">Software</th>'
+			+ '<td colspan="2" style="font-weight:600">Software</th>'
 			+ '</tr>';
 
 			$.each(val.vnf.sw, function(i,val2){
@@ -212,8 +227,11 @@
 
 
 
-			var myChart = loadChart(canvasId);
+			val.canvas = canvasId;
+			var myChart = loadChart(canvasId,'session ' + val.session);
 			addChart(val, myChart);
+
+			val.chart = myChart;
 			// canvases[chartRowId] = myChart;
 		});
 
@@ -221,7 +239,37 @@
 	}
 
 
+	$('#chart-type-selector').change(function(){
+		var selected = $('option:selected', this);
 
+		switch(selected.val()){
+			case 'line':
+				$.each(database, function(i, val){
+					// val.chart.config.type = 'line';
+					var myChart = loadChart(val.canvas,'session ' + val.session);
+					addChart(val, myChart);
+					val.chart = myChart;
+					val.chart.update();
+				});
+			break;
+
+			case  'bar':
+				$.each(database, function(i, val){
+					// loadChart(val.canvas, 'session ' + val.session);					
+					// val.chart.update();
+
+					var myChart = loadChart(val.canvas,'session ' + val.session);
+					addChart(val, myChart);
+					val.chart = myChart;
+					val.chart.update();
+				});
+			break;
+
+			default:
+				break;
+		}
+
+	});
 
 	
 

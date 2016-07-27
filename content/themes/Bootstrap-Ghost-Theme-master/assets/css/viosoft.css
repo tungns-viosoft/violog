@@ -10,6 +10,7 @@ table {
 table th {
 	color: #fff;
 	background-color: #203C49;
+	text-align: center;
 	/*background: linear-gradient(to bottom right, #203C49, #2E5669);*/
 }
 
@@ -101,7 +102,7 @@ img.navbar-logo {
 /********* BANNER **********/
 
 .banner-header {
-	margin: 50px 0 0;
+	margin: 50px 0 10px;
 	min-height: 150px;
 }
 
@@ -185,7 +186,7 @@ body {
 	width: 80%;
 	float:left;
 	display: inline-block;
-	margin: 10px;
+	/*margin-left: 10px;*/
 	height: 230px;
 }
 
@@ -202,7 +203,7 @@ body {
 .item-selector-wrapper {
 	display: block;
 	width: 100%;
-	height: 100%;
+	height: calc(100% - 30px);
 }
 
 select.item-selector {
@@ -242,10 +243,10 @@ table.info-table tr td:first-child {
 	/*font-weight: 600;*/
 }
 
-#chart-container {
+.chart-container {
 	background-color: #F9F9F9;
-	padding-left: 10px;
-	padding-right: 10px;
+	padding: 10px;
+
 }
 
 .row-chart {
