@@ -25,12 +25,6 @@
 		<div class="col-md-10" >		
 
 			<div class="chart-container">
-				<div class="chart-option">
-					<select id="chart-type-selector">
-						<option value="line">Line</option>
-						<option value="bar">Bar</option>
-					</select>
-				</div>
 
 				<div id="chart-container">
 					
@@ -239,37 +233,40 @@
 	}
 
 
-	$('#chart-type-selector').change(function(){
-		var selected = $('option:selected', this);
+	// $('#chart-type-selector').change(function(){
+	// 	var selected = $('option:selected', this);
 
-		switch(selected.val()){
-			case 'line':
-				$.each(database, function(i, val){
-					// val.chart.config.type = 'line';
-					var myChart = loadChart(val.canvas,'session ' + val.session);
-					addChart(val, myChart);
-					val.chart = myChart;
-					val.chart.update();
-				});
-			break;
+	// 	switch(selected.val()){
+	// 		case 'line':
+	// 			$.each(database, function(i, val){
+	// 				val.chart.config.type = 'line';
+	// 				val.chart.update();
 
-			case  'bar':
-				$.each(database, function(i, val){
-					// loadChart(val.canvas, 'session ' + val.session);					
-					// val.chart.update();
 
-					var myChart = loadChart(val.canvas,'session ' + val.session);
-					addChart(val, myChart);
-					val.chart = myChart;
-					val.chart.update();
-				});
-			break;
+	// 				// var myChart = loadChart(val.canvas,'session ' + val.session, 'line');
+	// 				// addChart(val, myChart);
+	// 				// val.chart = myChart;
+	// 				// val.chart.update();
+	// 			});
+	// 		break;
 
-			default:
-				break;
-		}
+	// 		case  'bar':
+	// 			$.each(database, function(i, val){
+	// 				val.chart.config.type = 'bar';				
+	// 				val.chart.update();
 
-	});
+	// 				// var myChart = loadChart(val.canvas,'session ' + val.session, 'bar');
+	// 				// addChart(val, myChart);
+	// 				// val.chart = myChart;
+	// 				// val.chart.update();
+	// 			});
+	// 		break;
+
+	// 		default:
+	// 			break;
+	// 	}
+
+	// });
 
 	
 

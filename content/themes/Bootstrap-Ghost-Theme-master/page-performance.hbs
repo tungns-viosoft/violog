@@ -75,6 +75,7 @@
 </script>
 
 <section class="container">
+    <div class="chart-container">
     <section class="row"> 
         <section class="col-md-4 col-sm-4">
             <div class="usecase-block block">
@@ -121,25 +122,28 @@
         </section>
     </section>
 
-    <section class="row row-chart">
-        <section class="col-md-8">
-            <div class="chart">                    
-                <canvas class="chart-canvas" id="canvas"></canvas>
-            </div>
-        </section>
+    <section class="row">
+        <div class="performance-chart">     
+            <section class="col-md-8">               
+                    <canvas class="chart-canvas" id="canvas"></canvas>
+                
+            </section>
 
-        <section class="col-md-3">
-            <div class="testcase-table">
-                <table id="testcase-table">
-                    <tr>
-                        <th id="header-testcase">Test case</th>
-                        <th id="header-action">Remove</th>
-                    </tr>
-                </table>
-            </div>
-        </section>  
+            <section class="col-md-3">
+                <div class="testcase-table">
+                    <table id="testcase-table">
+                        <tr>
+                            <th id="header-testcase">Test case</th>
+                            <th id="header-action">Remove</th>
+                        </tr>
+                    </table>
+                </div>
+            </section>  
+        </div>
     </section>
 
+    </div> 
+    
     <script type="text/javascript">
 
         var currentUsecase;
@@ -256,7 +260,6 @@
             refreshTestcase();
 
         });
-
     </script>
 
 </section>

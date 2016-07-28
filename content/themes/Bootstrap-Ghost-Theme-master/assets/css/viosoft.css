@@ -29,17 +29,7 @@ select {
 }
 */
 
-/********* TRANSITION *********/
-.fadeout {
-    display: none;
-    transition: opacity 0.3s ease-out;
-    /*opacity: 0; */
-}
 
-.fadein {
-    /*opacity: 1;*/
-    display: block;
-}
 
 /********* NAVIGATION *********/
 #bs-example-navbar-collapse-1 ul li a.isActived {
@@ -218,6 +208,10 @@ select option {
 }
 
 #usecase-selector{
+}
+
+.performance-chart{
+	padding: 2em 0;
 }
 
 

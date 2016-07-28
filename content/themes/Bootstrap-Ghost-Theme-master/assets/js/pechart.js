@@ -82,7 +82,7 @@ function addChart(input, chart){
         ln[i] = (ln[i] / input.lines.length);
     });
 
-    var background = randomColor(1);
+    var background = randomColor(0.5);
 
     var newset = {
         label: input.session,
