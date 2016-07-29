@@ -1,7 +1,10 @@
 {{! The post loop }}
 <section class="container">
 	<section class="row">
-	{{#foreach posts}}
+	
+
+	{{#foreach posts }}
+
 		<article class="col-md-4">
 			<div class="panel panel-primary panel-post"  style="background-image: url('{{image}}');
     background-position: center;">
@@ -12,8 +15,9 @@
 			</div>
 		</article>
 	{{/foreach}}
+
 	</section>
-	<ul class="pagination">
+ 	<ul class="pagination">
 	 {{pagination}}
-	</ul>
+	</ul> 
 </section>

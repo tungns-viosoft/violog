@@ -2,6 +2,42 @@
 
 {{> "site-header"}}
 
+<!-- 	{{#get "posts" limit=1 filter="tag:hot" }}
+		{{#posts}}
+			<h1>{{title}}</h1>
+		{{/posts}}
+	{{/get}} -->
+
+<section class="container">
+	<section class="row hot-area">
+	{{#get "posts" limit=1 filter="featured:true"}}
+		{{#posts}}
+
+		<section class="col-md-8">
+			<div class="hot-image">
+				<a href="{{url}}">
+					<img src="{{image}}"/>	
+				</a>			
+			</div>
+		</section>
+		<section class="col-md-4">
+			<a href="{{url}}">
+				<div class="hot-description">
+					<h3>
+						{{title}}
+					</h3>
+					<p>
+						{{excerpt characters="140"}}
+					</p>
+				</div>
+			</a>
+		</section>
+		{{/posts}}
+	{{/get}}
+	</section>
+</section>
+ 
+
 <main role="main">
   {{! Include the post loop - partials/loop.hbs }}
   {{> "loop"}}

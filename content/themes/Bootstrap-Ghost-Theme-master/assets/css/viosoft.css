@@ -93,7 +93,7 @@ img.navbar-logo {
 
 .banner-header {
 	margin: 50px 0 10px;
-	min-height: 150px;
+	/*min-height: 150px;*/
 }
 
 .banner {
@@ -150,11 +150,34 @@ body {
 
 }
 
+/********* FOOTER *******/
+.main-footer {
+	/*background-color: #5F9DA9;*/
+	background-color: #242729;
+}
+
 
 /********* INDEX ********/
+.hot-area {
+	width: 100%;
+	height: auto;
+	margin-top: 10px; 
+	margin-bottom: 20px; 
+	padding-bottom: 20px;
+	border-bottom: rgba(32, 60, 73, 0.2) 1px solid;
+}
 
+.hot-image {
+	width: 100%;
+}
 
+.hot-description{
 
+}
+
+a > img:hover, a {
+	cursor: pointer;
+}
 /********* PERFORMANCE **********/
 
 .usecase-block {
@@ -266,6 +289,21 @@ table.info-table tr td:first-child {
 	width: 35%;    
 	vertical-align: top;
 	padding: 0 10px;
+}
+
+
+@media only screen and (max-width: 700px) {
+    .chart-pos {
+		display: block;
+		width: 100%;    
+		padding: 0;
+	}
+
+	.table-pos {
+		display: block;
+		width: 100%;    
+		padding: 0;
+	}
 }
 
 .side-bar {
