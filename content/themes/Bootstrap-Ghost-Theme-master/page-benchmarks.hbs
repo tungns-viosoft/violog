@@ -43,6 +43,15 @@
 					<ul style="list-style: none;" class="filter-content" id="hardware-brand-filter-content">
 					</ul>
 				</div>
+
+				<div class="filter filter-brand">
+					<header class="filter-header">
+						CPUs
+					</header>
+					<ul style="list-style: none;" class="filter-content" id="cpu-filter-content">
+					</ul>
+				</div>
+
 				
 			</div>
 			
@@ -59,7 +68,10 @@
 
     var canvases = {};
     var hardwareBrand = [];
+    var cpus = [];
 
+	var checkedBrand = [];
+	var cpusChecked = [];
 
 	$.get("http://192.168.0.220:1337/api/performance", function(data, status) {
         
@@ -71,6 +83,12 @@
 
             if(!hardwareBrand.includes(val.vnf.hw.brand)){
             	hardwareBrand.push(val.vnf.hw.brand);
+            	checkedBrand = hardwareBrand.slice();
+            }
+
+            if(!cpus.includes(val.vnf.hw.cpus)){
+            	cpus.push(val.vnf.hw.cpus);
+            	cpusChecked = cpus.slice();
             }
 
         });
@@ -84,36 +102,69 @@
 
 	function initFilter(){
 
-		var brandSelection = '';
+		var brandSelection = '';		
+		var cpuSelection = '';
 
 		$.each(hardwareBrand, function(i,val){
 			var id = 'brandid-' + val;
 
 			brandSelection += '<li><label><input type="checkbox" value="' + val +'" id="' + id + '"/> ' + val + '</label></li>';
-
 		});
 
 		$('#hardware-brand-filter-content').append(brandSelection);
+
+		$.each(cpus, function(i,val){
+			var id = 'cpuid-' + val;
+
+			cpuSelection += '<li><label><input type="checkbox" value="' + val +'" id="' + id + '"/> ' + val + " cores" + '</label></li>';
+		});
+
+		$('#cpu-filter-content').append(cpuSelection);
+
 	}
 
-	var checkedBrand = [];
 
 	$('#hardware-brand-filter-content').on('change','input',function(){
 
-		if(this.checked){
-			checkedBrand.push($(this).val());
-		} else {
-			checkedBrand.splice(checkedBrand.indexOf($(this).val()), 1);
+		// if(this.checked){
+		// 	checkedBrand.push($(this).val());
+		// } else {
+		// 	checkedBrand.splice(checkedBrand.indexOf($(this).val()), 1);
+		// }
+		checkedBrand = [];
+		$('#hardware-brand-filter-content input').each(function(){
+			if(this.checked){
+				checkedBrand.push($(this).val());
+			}
+		});
+		if(checkedBrand.length === 0){
+			checkedBrand = hardwareBrand.slice();
 		}
-		// console.log(checkedBrand);
+		console.log(checkedBrand);
 
 		refreshChartContainer();
 
 	});
 
 
+	$('#cpu-filter-content').on('change','input',function(){
+
+		cpusChecked = [];
+		$('#cpu-filter-content input').each(function(){
+			if(this.checked){
+				cpusChecked.push(Number($(this).val()));
+			}
+		});
+		if(cpusChecked.length === 0){
+			cpusChecked = cpus.slice();
+		}
+		refreshChartContainer();
+
+	});
+
+
 	function refreshChartContainer(){
-		if(checkedBrand.length <= 0){
+		if(checkedBrand.length <= 0 && cpusChecked.length <= 0){
 			$('div.row-chart').each(function(i, val){
 				// $(this).css('display', 'block');
 				$(this).show();
@@ -123,18 +174,22 @@
 
 				var id = $(this).attr('value');
 
-				if( ! checkedBrand.includes(database[id].vnf.hw.brand)){
-					$(this).fadeOut(500,function(){
-						$(this).hide();
-					});
-					// $(this).css('display', 'block');
-					// $(this).removeClass('fadein');		
-					// $(this).addClass('fadeout');
-				} else {
+				if( checkedBrand.includes(database[id].vnf.hw.brand) 
+					&& cpusChecked.includes(database[id].vnf.hw.cpus)){
+
 
 					$(this).fadeIn(500,function(){
 						$(this).show();
 					});
+
+					// $(this).css('display', 'block');
+					// $(this).removeClass('fadein');		
+					// $(this).addClass('fadeout');
+				} else {
+					$(this).fadeOut(500,function(){
+						$(this).hide();
+					});
+
 					// $(this).css('display', 'none');
 					// $(this).removeClass('fadeout');					
 					// $(this).addClass('fadein');
@@ -165,18 +220,18 @@
 			+ '<th colspan="2">' + val.vnfname + '</th>'
 			+ '</tr>'
 			+ '<tr>'
-			+ '<td colspan="2"  style="font-weight:600">Hardware</th>'
+			+ '<td class="group-label" colspan="2"  style="font-weight:600">Hardware</th>'
 			+ '</tr>';
 
 
 			$.each(val.vnf.hw, function(i,val1){
 				chartInfo += '<tr>'
-				+ '<td>'
+				+ '<td class="item-label ">'
 
 				+	i
 				
 				+ '</td>'
-				+ '<td>'
+				+ '<td class="item-value">'
 
 				+ 	val1
 				
@@ -193,12 +248,12 @@
 
 			$.each(val.vnf.sw, function(i,val2){
 				chartInfo += '<tr>'
-				+ '<td>'
+				+ '<td  class="item-label">'
 
 				+	val2.name
 				
 				+ '</td>'
-				+ '<td>'
+				+ '<td  class="item-value">'
 
 				+ 	val2.version
 				

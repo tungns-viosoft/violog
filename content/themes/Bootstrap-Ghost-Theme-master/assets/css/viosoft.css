@@ -249,14 +249,15 @@ canvas.chart-canvas{
 }
 
 
-
 table.info-table {
 	width: 100%;
 	max-width: 300px;
 }
 
-table.info-table tr td:first-child {
+table.info-table tr td.item-label {
 	width: 40%;
+	color: #07C;
+	text-transform:capitalize;
 	/*font-weight: 600;*/
 }
 
@@ -312,6 +313,7 @@ table.info-table tr td:first-child {
 
 .filter {
 	margin-top: 2em;
+	display: block;
 }
 
 .filter-header {
