@@ -371,3 +371,16 @@ table#testcase-table tr td button.action-button {
 
 
 
+/********* PAGE *******/
+.page-body {
+	background-color: #fff;
+	padding: 10px 30px;
+}
+
+.page-body h2 {
+	/*display: inline-block;*/
+	
+}
+
+
+

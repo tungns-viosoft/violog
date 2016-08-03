@@ -76,71 +76,72 @@
 
 <section class="container">
     <div class="chart-container">
-    <section class="row"> 
-        <section class="col-md-4 col-sm-4">
-            <div class="usecase-block block">
-                <div class="block-label">
-                    <span id="usecase-label">Use case</span>
+        <section class="row"> 
+            <section class="col-md-4 col-sm-4">
+                <div class="usecase-block block">
+                    <div class="block-label">
+                        <span id="usecase-label">Use case</span>
+                    </div>
+
+                    <div class="item-selector-wrapper">
+                        <select class="item-selector" id="usecase-selector" size="10">
+                        <!-- Option data here -->
+                        </select>
+                    </div>
+
                 </div>
-
-                <div class="item-selector-wrapper">
-                    <select class="item-selector" id="usecase-selector" size="10">
-                    <!-- Option data here -->
-                    </select>
-                </div>
-
-            </div>
-        </section>
-
-        <section class="col-md-4 col-sm-4">
-            <div class="vnf-block block">
-                <div class="block-label">
-                    <span id="vnf-label">VNF</span>                    
-                </div>
-
-                <div class="item-selector-wrapper">
-                    <select class="item-selector" id="vnf-selector" name="vnf-selector" size="10">
-                    </select>
-                </div>
-
-            </div>
-        </section>
-
-        <section class="col-md-4 col-sm-4">
-            <div class="testcase-block block">
-                <div class="block-label">
-                    <span id="testcase-label">Test case</span>
-                </div>
-
-                <div class="item-selector-wrapper">
-                    <select class="item-selector" id="testcase-selector" name="testcase-selector" size="10">
-                    <!-- test case data here -->
-                    </select>
-                </div>
-
-            </div>  
-        </section>
-    </section>
-
-    <section class="row">
-        <div class="performance-chart">     
-            <section class="col-md-8">               
-                    <canvas class="chart-canvas" id="canvas"></canvas>
-                
             </section>
 
-            <section class="col-md-3">
-                <div class="testcase-table">
-                    <table id="testcase-table">
-                        <tr>
-                            <th id="header-testcase">Test case</th>
-                            <th id="header-action">Remove</th>
-                        </tr>
-                    </table>
+            <section class="col-md-4 col-sm-4">
+                <div class="vnf-block block">
+                    <div class="block-label">
+                        <span id="vnf-label">VNF</span>                    
+                    </div>
+
+                    <div class="item-selector-wrapper">
+                        <select class="item-selector" id="vnf-selector" name="vnf-selector" size="10">
+                        </select>
+                    </div>
+
                 </div>
-            </section>  
-        </div>
-    </section>
+            </section>
+
+            <section class="col-md-4 col-sm-4">
+                <div class="testcase-block block">
+                    <div class="block-label">
+                        <span id="testcase-label">Test case</span>
+                    </div>
+
+                    <div class="item-selector-wrapper">
+                        <select class="item-selector" id="testcase-selector" name="testcase-selector" size="10">
+                        <!-- test case data here -->
+                        </select>
+                    </div>
+
+                </div>  
+            </section>
+        </section>
+
+
+        <section class="row">
+            <div class="performance-chart">     
+                <section class="col-md-8">               
+                        <canvas class="chart-canvas" id="canvas"></canvas>
+                    
+                </section>
+
+                <section class="col-md-3">
+                    <div class="testcase-table">
+                        <table id="testcase-table">
+                            <tr>
+                                <th id="header-testcase">Test case</th>
+                                <th id="header-action">Remove</th>
+                            </tr>
+                        </table>
+                    </div>
+                </section>  
+            </div>
+        </section>
 
     </div> 
     
